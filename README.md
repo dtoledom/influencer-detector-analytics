@@ -1,8 +1,13 @@
 # influencer-detector-analytics
 Spark module for performing Page Rank algorithm over graph stored in Cassandra
 
+# Requirements
+- [Spark 2.1.0](http://spark.apache.org/): `brew install apache-spark`
+- [sbt 0.13](http://www.scala-sbt.org/): `brew install sbt`
+- [Cassandra 3.1](http://cassandra.apache.org/) `brew install cassandra`
+
 # How to run
-- Compile: `sbt compile`
+- Compile: `sbt package`
 - Submit Spark app:
 ```
 spark-submit \
