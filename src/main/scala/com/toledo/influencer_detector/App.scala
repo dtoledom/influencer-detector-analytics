@@ -40,8 +40,10 @@ object App {
     val edges: RDD[Edge[Null]] = edgesRows.map(edgeRow => Edge(edgeRow.source, edgeRow.destination))
     val defaultNode = ("None")
 
-    val graph: Graph[String, _] = Graph(nodes, edges, defaultNode)
-    graph.vertices.foreach(println)
-    graph.edges.foreach(println)
+    val graph: Graph[String, Null] = Graph(nodes, edges, defaultNode)
+
+    val pagerank = graph.pageRank(0.001)
+
+    println(pagerank.vertices.top(5))
   }
 }
