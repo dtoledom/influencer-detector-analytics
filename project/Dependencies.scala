@@ -8,24 +8,32 @@ object Dependencies {
   val excludeNettyIo = ExclusionRule(organization = "org.jboss.netty")
 
   lazy val sparkDeps = Seq(
+    // Should be provided
     "org.apache.spark" %% "spark-core" % spark % "provided" excludeAll (excludeNettyIo),
     // Force netty version.  This avoids some Spark netty dependency problem.
     "io.netty" % "netty-all" % netty
   )
 
   lazy val sparkExtraDeps = Seq(
+    // Should all be provided
+    "org.apache.spark" %% "spark-graphx" % spark % "provided" excludeAll (excludeNettyIo),
     "org.apache.spark" %% "spark-sql" % spark % "provided" excludeAll (excludeNettyIo),
     "org.apache.spark" %% "spark-streaming" % spark % "provided" excludeAll (excludeNettyIo)
   )
 
   lazy val jobserverDeps = Seq(
-    "com.github.spark-jobserver.spark-jobserver" % "job-server-api_2.10" % jobServer % "provided",
-    "com.github.spark-jobserver.spark-jobserver" % "job-server-extras_2.10" % jobServer % "provided"
+     // Should be provided
+    "spark.jobserver" %% "job-server-api" % jobServer % "provided"
+  )
+  
+  lazy val cassandraDeps = Seq (
+     // Should be provided
+    "com.datastax.spark" %% "spark-cassandra-connector" % cassandra % "provided"
   )
 
   // This is needed or else some dependency will resolve to 1.3.1 which is in jdk-8
   lazy val typeSafeConfigDeps = Seq("com.typesafe" % "config" % typesafeConfig force())
-
+  
   lazy val coreTestDeps = Seq()
 
   val repos = Seq(

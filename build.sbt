@@ -1,13 +1,15 @@
 import Dependencies._
 import Versions._
 
+mainClass in Compile := Some("com.toledo.influencer.detector.App")
+mainClass in assembly := Some("com.toledo.influencer.detector.App")
+assemblyJarName in assembly := "toledo-influencer-detector_0.0.1.jar"
 
 lazy val commonSettings: Seq[Def.Setting[_]] = Defaults.coreDefaultSettings ++ Seq(
   organization := "com.toledo",
   version := "0.1.0-SNAPSHOT",
   scalaVersion := "2.10.6",
   resolvers ++= Dependencies.repos,
-  credentials += Credentials(Path.userHome / ".sbt" / ".credentials"),
   dependencyOverrides += "org.scala-lang" % "scala-library" % scalaVersion.value,
   parallelExecution in Test := false,
   scalacOptions in ThisBuild ++= Seq("-unchecked", "-deprecation", "-feature"),
@@ -34,7 +36,16 @@ lazy val root = (project in file("."))
     rootSettings,
     name := "influencer-detector-analytics",
     libraryDependencies ++= sparkDeps ++ typeSafeConfigDeps ++ sparkExtraDeps ++ coreTestDeps
-      ++ jobserverDeps,
+      ++ jobserverDeps ++ cassandraDeps,
     test in assembly := {},
     fork in Test := true
 )
+
+assemblyMergeStrategy in assembly := {
+  case m if m.toLowerCase.endsWith("manifest.mf")          => MergeStrategy.discard
+  case m if m.toLowerCase.matches("meta-inf.*\\.sf$")      => MergeStrategy.discard
+  case "log4j.properties"                                  => MergeStrategy.discard
+  case m if m.toLowerCase.startsWith("meta-inf/services/") => MergeStrategy.filterDistinctLines
+  case "application.conf"                                  => MergeStrategy.concat
+  case _                                                   => MergeStrategy.first
+}
