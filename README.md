@@ -1,2 +1,2 @@
 # influencer-detector-analytics
-Spark module for performing Page Rank algorithm over graph stored in Cassandra
+Spark job server application for running Page Rank in order to detect influencer over a social graph stored in Cassandra

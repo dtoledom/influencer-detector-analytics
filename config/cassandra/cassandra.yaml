@@ -1,0 +1,10 @@
+cluster_name: ‘Influencer Detector Cassandra’
+
+seed_provider:
+  - class_name: org.apache.cassandra.locator.SimpleSeedProvider
+    parameters:
+         - seeds: “10.0.1.248,10.0.1.90,10.0.1.32”
+
+listen_address: "10.0.1.248"
+rpc_address: "127.0.0.1"
+auto_bootstrap: false
